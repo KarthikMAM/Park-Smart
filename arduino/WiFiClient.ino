@@ -36,7 +36,7 @@ void setup() {
 }
 
 void loop() {
-  delay(5000);
+  delay(3000);
   
   int tp1 = digitalRead(14);
   int tp2 = digitalRead(12);
@@ -56,15 +56,7 @@ void loop() {
 
   Serial.print("connecting to ");
   Serial.println(host);
-  
-  // Use WiFiClient class to create TCP connections
-  WiFiClient client;
-  const int httpPort = 80;
-  if (!client.connect(host, httpPort)) {
-    Serial.println("connection failed");
-    return;
-  }
-  
+    
   // We now create a URI for the request
     
   String url[2] { " ", " " };
@@ -73,16 +65,22 @@ void loop() {
     
   // This will send the request to the server
   for(int i=0; i<2; i++) {
+    // Use WiFiClient class to create TCP connections
+    WiFiClient client;
+    const int httpPort = 80;
+    if (!client.connect(host, httpPort)) {
+      Serial.println("connection failed");
+      return;
+    }
     
     Serial.print("Requesting URL: ");
     Serial.println(url[i]);
     
     client.print(String("GET ") + url[i] + " HTTP/1.1\r\n" +
-                 "Host: " + host + "\r\n" + 
-                 "Connection: close\r\n\r\n");
-    delay(1000);
+                 "Host: " + host + "\r\n\r\n");
     
     // Read all the lines of the reply from server and print them to Serial
+    while(!client.available()) { delay(500); }
     while(client.available()){
       String line = client.readStringUntil('\r');
       Serial.print(line);

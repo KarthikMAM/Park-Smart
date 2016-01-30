@@ -18,7 +18,7 @@
         $sTime  = (int)$row["parkfrom"];
         $eTime = (int)$row["parkend"] + $eTime;
         
-        if($balance > $eTime - $sTime && (int)$row["parkend"] < cTime) {
+        if($balance > $eTime - $sTime && (int)$row["parkend"] > cTime) {
             //Update the query
             $query = "update booking set parkend=" . $eTime . " where custid = " . $custId . ";";
             $db->query($query);
