@@ -7,7 +7,7 @@
         </button>
         
         <img src="img/icon.png" style="height: 48px; width: 48px; float: left; vertical-align: middle">
-        <a href="#" class="navbar-brand">Smart Park</a>
+        <a href="#" class="navbar-brand">Park Smart</a>
     </div>
     <div class="collapse navbar-collapse" id="navigator">
         <ul class="nav navbar-nav navbar-right">
