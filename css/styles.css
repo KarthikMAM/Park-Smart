@@ -1,0 +1,24 @@
+* {
+    border-radius: 0px !important;
+}
+
+.container {
+    padding-top: 100px;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+nav li a {
+    padding-right: 5px;
+}
+
+td h4 {
+    text-align: right;
+}
+
+td b {
+    float: right;
+}
+

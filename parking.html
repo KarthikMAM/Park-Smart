@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Parking Lot Details</title>
+    </head>
+    <body>
+        <div class="container" style="padding:100px">
+            <center>
+                <button class="btn btn-default" id="1"><h3>1</h3></button>
+                <button class="btn btn-default" id="2"><h3>2</h3></button>
+            </center>
+        </div>
+        
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="js/pie-chart.js"></script>
+        <script src="js/script.js"></script>
+        <script type="text/javascript">
+            function update() {
+                $.get("avail.php?pid=1", function(data){
+                    if(data == 0) {
+                        $("#1").attr("class", "btn btn-success");
+                    } else {
+                        $("#1").attr("class", "btn btn-danger");
+                    }
+                });
+                $.get("avail.php?pid=2", function(data){
+                    if(data == 0) {
+                        $("#2").attr("class", "btn btn-success");
+                    } else {
+                        $("#2").attr("class", "btn btn-danger");
+                    }
+                });
+            }
+            
+            setInterval(update, 2000);
+        </script>
+    </body>
+</html>
