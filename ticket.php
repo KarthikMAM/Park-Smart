@@ -12,6 +12,7 @@
         <?php extract($_COOKIE); ?>
         <?php include 'conn.php'; ?>
         <?php
+            //Get the booked ticket details
             $query = "select * from booking where custid=" . $custId . ";";
             
             $result = $db->query($query);
@@ -21,8 +22,6 @@
                 $pid = $row["pid"];
                 $sTime = $row["parkfrom"];
                 $eTime = $row["parkend"];
-                
-                print($pid);
             }
         ?>
         
@@ -58,6 +57,10 @@
                     <tr>
                         <td class="col-sm-6"><h4>To Time : </h4></td>
                         <td class="col-sm-6" id="eTime"><?php print($eTime); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="col-sm-6"><h4>Total : </h4></td>
+                        <td class="col-sm-6" id="eTime"><?php print("₹ " . ($eTime - $sTime)); ?></td>
                     </tr>
                 </table>
                 <div class="panel-footer">
@@ -105,15 +108,22 @@
 
         <?php include 'links.php' ?>
         <script type="text/javascript">
+            //Get the current time as hh:mm
+            //Convert it to hh * 60 + mm 
             var cTime = Date().split(" ")[4].split(":");
             cTime = parseInt(cTime[0]) * 60 + parseInt(cTime[1]);
             
+            //Get the raw time sent by server
             var sTime = parseInt($("#sTime").html());
             var eTime = parseInt($("#eTime").html());
             
-            $("#sTime").html(parseInt(sTime / 60 ) + " : " + (sTime % 60) + " hrs");
-            $("#eTime").html(parseInt(eTime / 60 ) + " : " + (eTime % 60) + " hrs");
+            //Convert raw time to standard hh:ss format
+            var sTimeHr = parseInt(sTime / 60 );
+            var eTimeHr = parseInt(eTime / 60 );
+            $("#sTime").html((sTimeHr > 12 ? sTimeHr - 12 : sTImeHr) + " : " + (sTime % 60) + (sTime < 720 ? " AM" : " PM"));
+            $("#eTime").html((eTimeHr > 12 ? eTimeHr - 12 : eTImeHr) + " : " + (eTime % 60) + (eTime < 720 ? " AM" : " PM"));
             
+            //Start the timer with the following parameters
             $("#timer").attr("data-percent", (cTime - sTime) * 100 / (eTime - sTime));
             $("#timer").pieChart({
                 barColor: sTime > cTime || eTime < cTime ? '#f00' : '#0f0',
@@ -124,13 +134,19 @@
                 }
             });        
             
-            $("#extendOk").click(function(){            
+            //Extend ticket action
+            $("#extendOk").click(function(){
+                //Prepare the url          
                 var cTime = Date().split(" ")[4].split(":");
                 cTime = parseInt(cTime[0]) * 60 + parseInt(cTime[1]);
                 var url = "extend.php?eTime=" + $("#extendAmt").val() + "&cTime=" + cTime;
+                
+                //Success scenario
                 function success() {
                     window.location = "ticket.php"; 
                 }
+                
+                //Failure scenario
                 function fail(){
                     $("#extendOk").attr("class", "btn btn-default");
                     $("#extendOk").attr("html", "Ok!");
@@ -142,26 +158,36 @@
                     setTimeout(function() { $("#extend").modal('hide'); }, 100);
                     $("#errorMsg").modal('show');
                 }
+                
+                //Toggle update status from server
                 toggleButton($(this), url, success, fail);
             });
             
+            //Cancel ticket action
             $("#cancel").click(function(){
-            var url = "cancel.php";
-            function success() {
-                var cTime = Date().split(" ")[4].split(":");
-                cTime = parseInt(cTime[0]) * 60 + parseInt(cTime[1]);
-                $.get("cron.php?cTime=" + cTime, function(data){
-                        window.location = "account.php"; 
-                });
-            }
-            function fail() {
-                    $("#extendOk").attr("class", "btn btn-default");
-                    $("#extendOk").attr("html", "Ok!");
-            }
-            
-            toggleButton($(this), url, success, fail);
+                //Prepare the url
+                var url = "cancel.php";
+                
+                //Success scenario
+                function success() {
+                    var cTime = Date().split(" ")[4].split(":");
+                    cTime = parseInt(cTime[0]) * 60 + parseInt(cTime[1]);
+                    $.get("cron.php?cTime=" + cTime, function(data){
+                            window.location = "account.php"; 
+                    });
+                }
+                
+                //Failure scenario
+                function fail() {
+                        $("#extendOk").attr("class", "btn btn-default");
+                        $("#extendOk").attr("html", "Ok!");
+                }
+                
+                //Toggle update status from server
+                toggleButton($(this), url, success, fail);
             });
             
+            //Page highlighted on the menu bar
             $("#ticketLink").attr("class", "active");
         </script>
     </body>

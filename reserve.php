@@ -52,13 +52,15 @@
         
         <?php include 'links.php'; ?>
         <script type="text/javascript">
-        
+            
+            //Set active mall action
             $(".list-group .list-group-item").click(function(e) {
                 $("#book").attr("class", "btn btn-default");
                 $(".list-group .active").attr("class", "list-group-item");
                 $("#book").attr("disabled", true);
                 $(this).attr("class", "list-group-item active");
                 
+                //Get the number of available slots in the mall and display them
                 var query = "check.php?mallId=" + $(".list-group .active").attr("id");
                 $.get(query, function(data)  {
                     $("#info").html($(".list-group .active").html() + " : " + data + " Slots"); 
@@ -69,12 +71,16 @@
                         
                     } 
                 });
+                
+                //Prevent default click action
                 e.preventDefault();
             });
             
+            //Book a ticket action
             $("#book").click(function(e) {
                 e.preventDefault();
                 
+                //Set the time data
                 var sTime = $("#parkStart").val().split(":");
                 var eTime = $("#parkEnd").val().split(":");
                 var cTime = Date().split(" ")[4].split(":");
@@ -83,6 +89,8 @@
                 eTime = parseInt(eTime[0]) * 60 + parseInt(eTime[1])
                 cTime = parseInt(cTime[0]) * 60 + parseInt(cTime[1]);
                 
+                //If conditions are met book a ticket   cTime <= sTime <= cTime + 30 <= eTime 
+                //Else display error message
                 if(cTime > sTime || sTime > cTime + 30 || sTime > eTime) {
                     var reasons = 
                         "<li>" + " Slot booking guidelines not followed " 
@@ -97,11 +105,18 @@
                     return;
                 }
                 
+                //Prepare url
                 var url = "book.php?"
                             + "mallId=" + $(".list-group .active").attr("id")
                             + "&sTime=" + sTime
                             + "&eTime=" + eTime
-                function success() { window.location = "ticket.php"; }
+                
+                //Success scenario
+                function success() { 
+                    window.location = "ticket.php"; 
+                }
+                
+                //Failure scenario
                 function fail() { 
                     $("#book").html("Book!"); 
                     
@@ -112,9 +127,12 @@
                     $("#reasons").html(reasons);
                     $("#errorMsg").modal({show: 'true'});
                 }
+                
+                //Toggle update status from server
                 toggleButton($(this), url, success, fail)
             });
         
+            //Highlight the page in the navbar
             $("#reserveLink").attr("class", "active");
         </script>
     </body>

@@ -1,12 +1,10 @@
 <?php
-    header('Access-Control-Allow-Origin: *');
+    //Extract data required and open db connection
     extract($_GET);     //[$custId]
     extract($_COOKIE);
-
     include 'conn.php';
     
-    //Set that the arrived is true so that the cron job 
-    //will remove this and charge the user if necessary
+    //Cancel the ticket
 	$query = "update booking set arrived=true where custid=" . $custId . ";";
     $db->query($query);
     print('s');

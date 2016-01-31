@@ -1,16 +1,9 @@
 <?php
+    //Extract data required and open db connection
     extract($_GET);     //[$pid]
-
-    //Database config variables
-    $server = "localhost";
-	$user = "u699426187_spark";
-	$password = "hello1234";
-	$database = "u699426187_spark";
-	
-	//Sql connection and query
-	$db = new mysqli($server, $user, $password, $database) or die();
+    include 'conn.php';
     
-    //Update that the customer has left the parking slot
+    //Update parking slot's status
 	$query = "update parking set occupied=false where id=" . $pid . ";";
     $db->query($query);
     print('s');

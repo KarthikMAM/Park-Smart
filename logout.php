@@ -1,6 +1,7 @@
 <?php
+    //delete cookies and goto login page
     setcookie("userId", "");
     setcookie("custId", "");
     
-    header("Location: http://smartpark.hol.es/login.php");
+    header("Location: login.php");
  ?>

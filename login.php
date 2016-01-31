@@ -41,27 +41,38 @@
         
         <?php include 'links.php' ?>
         <script type="text/javascript">
+            //Login action
             $('#login').click(function(e) {
+                //Prevent form's submit action
                 e.preventDefault();
                 
+                //Prepare url
                 var url = "signin.php" + "?"
                                 + "userId=" + $("#userId").val()
                                 + "&passWd=" + $("#passWd").val();
+                                
+                //Success scenario
                 function success() { 
                     window.location = "account.php"; 
                 }
+                
+                //Failure scenario
                 function fail() {
                     $("#login").attr("class", "btn btn-default");
                     $("#login").attr("html", "Login!");
                 }
+                
+                //Toggle update status from server
                 toggleButton($(this), url, success, fail);
             });
 
+            //New account action
             $('#new').click(function(e) {
                 e.preventDefault();
                 window.location = "new.php";
             });
             
+            //Highlight current page in navbar
             $("#loginLink").attr("class", "active");
         </script>
     </body>

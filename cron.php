@@ -1,12 +1,12 @@
 <?php
+    //Extract data required and open db connection
     extract($_GET);     //[$cTime]
-
     include 'conn.php';
     
-    if(!isset($cTime)) {
-        $cTime = (int)date('H') * 60 + (int)date('i') + 330;   
-    }
+    //Set current time
+    $cTime = (int)date('H') * 60 + (int)date('i') + 330; 
     
+    //Use tansactions here to produce atomic updates
     try {
         $db->autocommit(FALSE);
         
@@ -38,10 +38,10 @@
         $db->query($query2);
         $db->query($query3);
          
-        //Commit the transaction updates
+        //Commit updates
         $db->commit();
     } catch (Exception $e) {
-        //If error print the error message and rollback the updates
+        //Rollback changes and print error
         print($e);
         $db->rollback();
     }

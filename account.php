@@ -12,6 +12,7 @@
     <?php extract($_COOKIE); ?>
     <?php include 'conn.php'; ?>
     <?php
+        //Get customer details
         $query = "select * from logs where custid=" . $custId . ";";
         $result = $db->query($query);
      ?>
@@ -80,13 +81,16 @@
                                     $eTime = (int)$row["parkend"];
                                     $cost = ($eTime - $sTime);
                                     $total += $cost;
+                                    
+                                    $sTimeHr = (int)($sTime / 60);
+                                    $eTimeHr = (int)($eTime / 60);
                                 ?>
                                 <tr>
                                     <td><?php print($count);?></td>
                                     <td><?php print($pid); ?></td>
-                                    <td><?php print((int)($sTime / 60) . " : " . ($sTime % 60)) . " hrs"; ?></td>
-                                    <td><?php print((int)($eTime / 60) . " : " . ($eTime % 60)) . " hrs"; ?></td>
-                                    <td><?php print("$ " . $cost); ?></td>
+                                    <td><?php print(($sTimeHr > 12 ? $sTimeHr - 12 : $sTimeHr) . " : " . ($sTime % 60)) . ($sTime < 720 ? " AM" : " PM"); ?></td>
+                                    <td><?php print(($eTimeHr > 12 ? $eTimeHr - 12 : $eTimeHr) . " : " . ($eTime % 60)) . ($sTime < 720 ? " AM" : " PM"); ?></td>
+                                    <td><?php print("₹ " . $cost); ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -99,7 +103,7 @@
                     </tfoot>
                 </table>
             <?php } else { ?>
-                <?php header("Location: http://smartpark.hol.es/login.php");?>
+                <?php header("Location: login.php");?>
             <?php } ?>
         </div>
     </div>
@@ -107,12 +111,7 @@
 
     <?php include 'links.php' ?>
     <script type="text/javascript">
-        var sTime = parseInt($("#sTime").html());
-        var eTime = parseInt($("#eTime").html());
-        
-        $("#sTime").html(parseInt(sTime / 100 ) + ":" + (sTime % 100) );
-        $("#eTime").html(parseInt(eTime / 100 ) + ":" + (eTime % 100) );
-        
+        //Toggle update status from server
         $("#accountLink").attr("class", "active");
     </script>
 </body>

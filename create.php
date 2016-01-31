@@ -1,9 +1,9 @@
 <?php
+    //Extract data required and open db connection
     extract($_GET);     //[$userId, $passWd]
-
     include 'conn.php';
     
-    //Create the database entry for the new customer with an initial balance of 1000
+    //Create new account if not already present
 	$query = "insert into customer(userid, password, balance) values('" . $userId . "', '" . $passWd . "', " . $balance . ");";
     if($db->query($query)) {
         print("s");

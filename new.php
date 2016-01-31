@@ -42,9 +42,12 @@
         
         <?php include 'links.php'?>
         <script type="text/javascript">
+            //New account action
             $('#new').click(function(e) {
+                //Prevent form's submit action
                 e.preventDefault();
                 
+                //Prepare url
                 var userId = document.getElementById("userId").value;
                 var passWd = document.getElementById("passWd").value;
                 var balance = document.getElementById("balance").value;
@@ -52,14 +55,23 @@
                             + "userId=" + userId
                             + "&passWd=" + passWd
                             + "&balance=" + balance;
-                function success() { window.location = "login.php"; }
+                            
+                //Success scenario
+                function success() { 
+                    window.location = "login.php"; 
+                }
+                
+                //Failure scenario
                 function fail() {
                     $("#new").attr("class", "btn btn-default");
                     $("#new").attr("html", "Create Now!");
                 }
+                
+                //Toggle update status from server
                 toggleButton($(this), url, success, fail);
             });
             
+            //Highlight current page in navbar
             $("#loginLink").attr("class", "active");
         </script>
     </body>

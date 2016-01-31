@@ -18,7 +18,9 @@
         <script src="js/pie-chart.js"></script>
         <script src="js/script.js"></script>
         <script type="text/javascript">
+            //Update status of parking slots periodically
             function update() {
+                //Slot 1
                 $.get("avail.php?pid=1", function(data){
                     if(data == 0) {
                         $("#1").attr("class", "btn btn-success");
@@ -26,6 +28,8 @@
                         $("#1").attr("class", "btn btn-danger");
                     }
                 });
+                
+                //Slot 2
                 $.get("avail.php?pid=2", function(data){
                     if(data == 0) {
                         $("#2").attr("class", "btn btn-success");
