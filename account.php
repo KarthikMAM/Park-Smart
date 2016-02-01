@@ -54,7 +54,7 @@
                                 </tr>   
                                 <tr>
                                     <td><b>Balance : </b></td>
-                                    <td>$ <?php print($balance); ?></td>
+                                    <td>&#8377; <?php print($balance); ?></td>
                                 </tr>   
                             </table>
                         </div>
@@ -90,7 +90,7 @@
                                     <td><?php print($pid); ?></td>
                                     <td><?php print(($sTimeHr > 12 ? $sTimeHr - 12 : $sTimeHr) . " : " . ($sTime % 60)) . ($sTime < 720 ? " AM" : " PM"); ?></td>
                                     <td><?php print(($eTimeHr > 12 ? $eTimeHr - 12 : $eTimeHr) . " : " . ($eTime % 60)) . ($sTime < 720 ? " AM" : " PM"); ?></td>
-                                    <td><?php print("₹ " . $cost); ?></td>
+                                    <td><?php print("&#8377; " . $cost); ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -98,7 +98,7 @@
                     <tfoot>
                         <tr>
                             <td colspan="4"><b style="float:right">Cost</b></td>
-                            <td><?php print("$ " . $total); ?></td>
+                            <td><?php print("&#8377; " . $total); ?></td>
                         </tr>
                     </tfoot>
                 </table>

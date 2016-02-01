@@ -60,7 +60,7 @@
                     </tr>
                     <tr>
                         <td class="col-sm-6"><h4>Total : </h4></td>
-                        <td class="col-sm-6" id="eTime"><?php print("₹ " . ($eTime - $sTime)); ?></td>
+                        <td class="col-sm-6" id="eTime"><?php print("&#8377; " . ($eTime - $sTime)); ?></td>
                     </tr>
                 </table>
                 <div class="panel-footer">
@@ -120,8 +120,8 @@
             //Convert raw time to standard hh:ss format
             var sTimeHr = parseInt(sTime / 60 );
             var eTimeHr = parseInt(eTime / 60 );
-            $("#sTime").html((sTimeHr > 12 ? sTimeHr - 12 : sTImeHr) + " : " + (sTime % 60) + (sTime < 720 ? " AM" : " PM"));
-            $("#eTime").html((eTimeHr > 12 ? eTimeHr - 12 : eTImeHr) + " : " + (eTime % 60) + (eTime < 720 ? " AM" : " PM"));
+            $("#sTime").html((sTimeHr > 12 ? sTimeHr - 12 : sTimeHr) + " : " + (sTime % 60) + (sTime < 720 ? " AM" : " PM"));
+            $("#eTime").html((eTimeHr > 12 ? eTimeHr - 12 : eTimeHr) + " : " + (eTime % 60) + (eTime < 720 ? " AM" : " PM"));
             
             //Start the timer with the following parameters
             $("#timer").attr("data-percent", (cTime - sTime) * 100 / (eTime - sTime));
