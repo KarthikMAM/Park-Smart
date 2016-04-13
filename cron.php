@@ -18,7 +18,6 @@
          */
         $query = "select * from booking where parkend + 1 < " . $cTime . " or (arrived = 1 and pid in (select id from parking where occupied = 0));";
         $result = $db->query($query);
-        print($result->num_rows);
         while($row = $result->fetch_assoc()) {
             //Compute the cost for this booking
             $cost = ($row['parkend'] - $row['parkfrom']);
@@ -40,6 +39,9 @@
          
         //Commit updates
         $db->commit();
+        
+        //Success so display the no. of affected rows
+        print($result->num_rows);
     } catch (Exception $e) {
         //Rollback changes and print error
         print($e);

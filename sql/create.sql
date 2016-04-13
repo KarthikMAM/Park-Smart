@@ -44,8 +44,8 @@ create table booking (
 ## Create the table for the Logging Transactions #############################################
 
 create table logs (
-    custid int unique,
-    pid int unique,
+    custid int,
+    pid int,
     parkfrom int,
     parkend int,
     arrived boolean default false,

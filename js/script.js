@@ -5,7 +5,7 @@ function toggleButton(button, url, success, failure) {
     
     //Send server the request
     $.get(url, function(data){
-        if(data == "s") {
+        if(data.indexOf("s") != -1) {
             //Actions for the success senario
             button.attr("class", "btn btn-success");
             button.attr("html", "Success!");
